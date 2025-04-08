@@ -6,8 +6,443 @@ LOGIN PAGE
 {% endblock %}
 
 {% block style %}
+<style>
+
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+
+:root {
+    --primary-color: hsl(244, 75%, 57%);
+    --accent-color: hsl(249, 64%, 47%);
+    --bg-color: hsl(208, 97%, 85%);
+    --white: #fff;
+    --gray: #4f4f4f;
+    --light-gray: #f4f4f4;
+    --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-color);
+}
+
+.dashboard__container {
+    display: flex;
+    height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 240px;
+    background: linear-gradient(180deg, var(--primary-color), var(--accent-color));
+    color: var(--white);
+    padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.sidebar__logo {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+}
+
+.sidebar__menu li {
+    list-style: none;
+    margin-bottom: 1.25rem;
+}
+
+.sidebar__menu a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    transition: all 0.3s ease;
+}
+
+.sidebar__menu a.active,
+.sidebar__menu a:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    padding: 0.5rem;
+    border-radius: 8px;
+}
+
+/* Main Area */
+.main {
+    flex: 1;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.navbar__title {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.navbar__actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.navbar__avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Cards */
+.cards {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+.card {
+    flex: 1;
+    min-width: 200px;
+    background: var(--white);
+    padding: 1rem;
+    border-radius: 1rem;
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    animation: fadeIn 1s ease;
+}
+
+.card__icon {
+    font-size: 1.75rem;
+    color: var(--primary-color);
+}
+
+/* Applications */
+.dashboard__section h2 {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.application__list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.application {
+    background: var(--white);
+    padding: 1rem;
+    border-radius: 0.75rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--shadow);
+}
+
+.status {
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.badge-success {
+    background-color: #e6f9f0;
+    color: #2e7d32;
+}
+
+.badge-pending {
+    background-color: #fff8e1;
+    color: #f9a825;
+}
+
+.badge-rejected {
+    background-color: #fdecea;
+    color: #d32f2f;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Profile Page Styles */
+
+.profile__header {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.profile__card {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 1.25rem;
+    text-align: center;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    max-width: 400px;
+    animation: fadeInUp 0.8s ease;
+}
+
+.profile__avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1rem;
+    border: 4px solid #3BC3FF;
+}
+
+.profile__card h2 {
+    margin: 0.5rem 0 0.25rem;
+    color: #333;
+    font-size: 1.5rem;
+}
+
+.profile__card p {
+    color: #666;
+    font-size: 0.95rem;
+}
+
+.profile__email {
+    color: #3BC3FF;
+    font-weight: 500;
+    margin-top: 0.5rem;
+}
+
+.info__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    background: #fff;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem;
+    animation: fadeIn 0.8s ease;
+}
+
+.info__grid strong {
+    display: block;
+    margin-bottom: 0.3rem;
+    color: #222;
+}
+
+.info__grid p {
+    margin: 0;
+    color: #555;
+}
+
+.skills__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    background: #fff;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+    list-style: none;
+    animation: fadeIn 0.8s ease;
+}
+
+.skills__list li {
+    background: #3BC3FF;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: background 0.3s ease;
+}
+
+.skills__list li:hover {
+    background: #249fda;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+        @media (max-width: 1024px) {
+            .dashboard__container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                flex-direction: row;
+                overflow-x: auto;
+                padding: 1rem;
+            }
+
+            .sidebar__menu {
+                display: flex;
+                flex-direction: row;
+                gap: 1rem;
+                margin: 0;
+            }
+
+            .main {
+                padding: 1rem;
+            }
+
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .profile__header {
+                padding: 0 1rem;
+            }
+
+            .info__grid {
+                grid-template-columns: 1fr;
+            }
+
+            .skills__list {
+                padding: 1rem;
+                gap: 0.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sidebar__logo {
+                font-size: 1rem;
+            }
+
+            .profile__card {
+                padding: 1rem;
+            }
+
+            .profile__avatar {
+                width: 90px;
+                height: 90px;
+            }
+
+            .skills__list li {
+                font-size: 0.75rem;
+                padding: 0.4rem 0.75rem;
+            }
+        }
+    
+
+</style>
 {% endblock %}
 
 {% block body %}
+    <div class="dashboard__container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h2 class="sidebar__logo">Jobbrige</h2>
+            <ul class="sidebar__menu">
+                <li><a href="{% url 'dashboard' %}"><i class="ri-dashboard-line"></i> Dashboard</a></li>
+                <li><a href="#"><i class="ri-briefcase-line"></i> Jobs</a></li>
+                <li><a href="#" class="active"><i class="ri-user-line"></i> Profile</a></li>
+                <li><a href="#"><i class="ri-settings-4-line"></i> Settings</a></li>
+                <li><a href="{% url 'logout' %}"><i class="ri-logout-box-r-line"></i> Logout</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main">
+            <header class="navbar">
+                <div class="navbar__title">Profile Overview</div>
+                <div class="navbar__actions">
+                    <i class="ri-notification-3-line"></i>
+                    <img src="{% static 'dashboard/IMAGES/bg-login.png' %}" alt="User" class="navbar__avatar">
+                </div>
+            </header>
+
+            <section class="dashboard__content">
+                <div class="profile__header">
+                    <div class="profile__card">
+                        <img src="{% static 'dashboard/IMAGES/bg-login.png' %}" alt="User" class="profile__avatar">
+                        <h2>Khushab Chauhan</h2>
+                        {% if user.Account_type == 'candidate' %}
+                        <p class="font-italic mb-1">Candidate</p>
+                        {% else %}
+                        <p class="font-italic mb-1">Company</p>
+                        {% endif %}
+                        <p>BCA Student at VNSGU</p>
+                        <p class="profile__email">khushab@example.com</p>
+                    </div>
+                </div>
+
+                <div class="dashboard__section">
+                    <h2>Personal Information</h2>
+                    <div class="info__grid">
+                        <div>
+                            <strong>Full Name:</strong>
+                            <p>Khushab Chauhan</p>
+                        </div>
+                        <div>
+                            <strong>Email:</strong>
+                            <p>khushab@example.com</p>
+                        </div>
+                        <div>
+                            <strong>Location:</strong>
+                            <p>Surat, India</p>
+                        </div>
+                        <div>
+                            <strong>Course:</strong>
+                            <p>BCA at VNSGU</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard__section">
+                    <h2>Skills</h2>
+                    <ul class="skills__list">
+                        <li>HTML5</li>
+                        <li>CSS3</li>
+                        <li>JavaScript</li>
+                        <li>Python</li>
+                        <li>Django</li>
+                        <li>React</li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
 
 {% endblock %}

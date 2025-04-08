@@ -15,4 +15,4 @@
         }
     });
 };
-showHiddenPassword("PASSWORD", "input-icon");
+showHiddenPassword("password", "input-icon");
