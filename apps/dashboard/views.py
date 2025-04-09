@@ -22,6 +22,19 @@ def login_requirement(my_fucn):
 
 
 
+
+def youcannot_access(my_fucn):
+    @wraps(my_fucn)
+    def _wrapped(request,*args,**kwargs):
+        if 'user_id' not  in request.session:
+            messages.error(request, 'does not have page.')
+            return redirect('login')
+
+        return my_fucn(request,*args,**kwargs)
+    return _wrapped 
+
+
+
 def login(request):
     if request.method == 'POST':
         email_ = request.POST['email']
@@ -49,6 +62,8 @@ def login(request):
 
     return render(request,'dashboard/login.html')
 
+
+@youcannot_access
 def register(request):
     if request.method == 'POST':
         Account_type_ = request.POST['Account_type']
@@ -81,6 +96,8 @@ def register(request):
         return redirect('login')
     return render(request,'dashboard/register.html')
 
+
+@youcannot_access
 def forgot(request):
     if request.method == 'POST':
         email_ = request.POST['email']
@@ -118,7 +135,9 @@ JOBIN Team
 
     return render(request,'dashboard/forgot.html')
 
+@youcannot_access
 def otp_varify(request):
+    print('here-1')
     if request.method == 'POST':
         email_ = request.POST['email']
         otp_ = request.POST['otp']
@@ -127,21 +146,21 @@ def otp_varify(request):
 
         if not email_varify(email_):
             messages.error(request, 'Invalid email')
-            return render(request, 'dashboard/otp-verify.html', {'email':email_})
+            return render(request, 'dashboard/otp_varify.html', {'email':email_})
         
         if not User.objects.filter(email=email_).exists():
             messages.error(request, 'Email does not exist')
-            return render(request, 'dashboard/otp-verify.html', {'email':email_})
+            return render(request, 'dashboard/otp_varify.html', {'email':email_})
         else:
             user = User.objects.get(email = email_)
             if user.otp == otp_:
                 if password_ !=confirm_password_:
                     messages.error(request, 'Passwords do not match')
-                    return render(request, 'dashboard/otp-verify.html', {'email':email_})
+                    return render(request, 'dashboard/otp_varify.html', {'email':email_})
                 
                 if not password_varify(password_)[0]:
                     messages.error(request, password_varify(password_)[1])
-                    return render(request, 'dashboard/otp-verify.html', {'email':email_})
+                    return render(request, 'dashboard/otp_varify.html', {'email':email_})
 
                 user.password = password_
                 user.save()
@@ -149,10 +168,11 @@ def otp_varify(request):
                 return redirect('login')
             else:
                 messages.error(request, 'Invalid OTP')
-                return render(request, 'dashboard/otp-verify.html', {'email':email_})
+                return render(request, 'dashboard/otp_varify.html', {'email':email_})
 
     return render(request,'dashboard/otp_varify.html')
 
+@youcannot_access
 def  logout(request):
     request.session.clear()
     messages.success(request,"Now, you are logged Out.")
@@ -170,6 +190,6 @@ def profile(request):
     }
     return render(request,'dashboard/profile.html',context)
 
-
+@youcannot_access
 def register_otp(request):
     return render(request,'dashboard/register_otp.html')
