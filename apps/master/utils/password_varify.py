@@ -18,4 +18,6 @@ def password_varify(password):
     if not re.search(r"[!@#$%^&*(),.?\":{}|<>]", password):
         errors.append("Password must contain at least one special character.")
 
-    return (True,) if not errors else (False, " ".join(errors))  
+    return (True,) if not errors else (False, " ".join(errors))
+
+

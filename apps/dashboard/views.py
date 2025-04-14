@@ -21,8 +21,6 @@ def login_requirement(my_fucn):
     return _wrapped 
 
 
-
-
 def youcannot_access(my_fucn):
     @wraps(my_fucn)
     def _wrapped(request,*args,**kwargs):
@@ -32,7 +30,6 @@ def youcannot_access(my_fucn):
 
         return my_fucn(request,*args,**kwargs)
     return _wrapped 
-
 
 
 def login(request):
@@ -61,7 +58,6 @@ def login(request):
 
 
     return render(request,'dashboard/login.html')
-
 
 @youcannot_access
 def register(request):
@@ -97,7 +93,6 @@ def register(request):
     return render(request,'dashboard/register.html')
 
 
-@youcannot_access
 def forgot(request):
     if request.method == 'POST':
         email_ = request.POST['email']

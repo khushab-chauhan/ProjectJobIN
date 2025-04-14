@@ -6,3 +6,7 @@ from apps.users.models import User, UserPersonalInfo
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         UserPersonalInfo.objects.create(user=instance)
+
+
+
+        
