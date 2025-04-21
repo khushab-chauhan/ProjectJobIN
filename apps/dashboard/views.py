@@ -61,7 +61,7 @@ def login(request):
 
     return render(request,'dashboard/login.html')
 
-@youcannot_access
+
 def register(request):
     if request.method == 'POST':
         Account_type_ = request.POST['Account_type']
