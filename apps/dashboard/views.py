@@ -8,6 +8,8 @@ from apps.master.utils.otp_generator import otp_generator
 from apps.users.models import User
 from functools import wraps
 from django.contrib.auth.decorators import login_required
+from .forms import CRUDforms
+from django.contrib.auth import get_user
 # Create your views here.
 
 def login_requirement(my_fucn):
@@ -185,6 +187,42 @@ def profile(request):
     }
     return render(request,'dashboard/profile.html',context)
 
-@youcannot_access
+
 def register_otp(request):
     return render(request,'dashboard/register_otp.html')
+
+
+
+# def crud(request):
+#     form = CRUDforms()
+#     if request.method == 'POST':
+#         form = CRUDforms(request.POST, request.FILES)
+#         if form.is_valid():
+#             images_ = form.cleaned_data['images'],
+#             full_name_ = form.cleaned_data['full_name'],
+#             company_name_ = form.cleaned_data['company_name']
+#             about_company_ = form.cleaned_data['about_company']
+#             website_company_ = form.cleaned_data['website_company']
+#             linkedin_company_ = form.cleaned_data['linkedin_company']
+#             company_type_ = form.cleaned_data['company_type']
+#             office_address_ = form.cleaned_data['office_address']
+#             contact_phone = form.cleaned_data['contact_phone']
+#      # Assign the logged-in user
+#             form.save()                     # Now save to DB
+#         else:
+#             return redirect('crud')         # Redirect after success
+
+    
+
+
+#     return render(request,'dashboard/crud.html',{'form':form})
+def crud(request):
+    form = CRUDforms()
+    if request.method == 'POST':
+        form = CRUDforms(request.POST, request.FILES)
+        if form.is_valid():
+            crud = form.save(commit=False)
+            crud.user = get_user(request)   # This fixes the SimpleLazyObject issue
+            crud.save()
+            return redirect('crud')
+    return render(request, 'dashboard/crud.html', {'form': form})

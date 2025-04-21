@@ -1,0 +1,295 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+{% block title %}
+CRUD PAGE
+{% endblock %}
+
+{% block style %}
+<style>
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+
+:root {
+    --primary-color: hsl(244, 75%, 57%);
+    --accent-color: hsl(249, 64%, 47%);
+    --bg-color: hsl(208, 97%, 85%);
+    --white: #fff;
+    --gray: #4f4f4f;
+    --light-gray: #f4f4f4;
+    --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-color);
+}
+.crud-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    max-width: 600px;
+    background: var(--white);
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: var(--shadow);
+    animation: fadeIn 0.5s ease;
+    margin-bottom: 2rem;
+}
+
+.crud-form input[type="text"],
+.crud-form input[type="email"] {
+    padding: 0.75rem 1rem;
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.crud-form input:focus {
+    border-color: var(--primary-color);
+    outline: none;
+}
+
+.crud-form button {
+    padding: 0.5rem 1.5rem;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.crud-form button:hover {
+    background-color: var(--accent-color);
+}
+
+.dashboard__container {
+    display: flex;
+    height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 240px;
+    background: linear-gradient(180deg, var(--primary-color), var(--accent-color));
+    color: var(--white);
+    padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.sidebar__logo {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+}
+
+.sidebar__menu li {
+    list-style: none;
+    margin-bottom: 1.25rem;
+}
+
+.sidebar__menu a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    transition: all 0.3s ease;
+}
+
+.sidebar__menu a.active,
+.sidebar__menu a:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    padding: 0.5rem;
+    border-radius: 8px;
+}
+
+/* Main Area */
+.main {
+    flex: 1;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.navbar__title {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.navbar__actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.navbar__avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Cards */
+.cards {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+.card {
+    flex: 1;
+    min-width: 200px;
+    background: var(--white);
+    padding: 1rem;
+    border-radius: 1rem;
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    animation: fadeIn 1s ease;
+}
+
+.card__icon {
+    font-size: 1.75rem;
+    color: var(--primary-color);
+}
+
+/* Applications */
+.dashboard__section h2 {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.application__list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.application {
+    background: var(--white);
+    padding: 1rem;
+    border-radius: 0.75rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--shadow);
+}
+
+.status {
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.badge-success {
+    background-color: #e6f9f0;
+    color: #2e7d32;
+}
+
+.badge-pending {
+    background-color: #fff8e1;
+    color: #f9a825;
+}
+
+.badge-rejected {
+    background-color: #fdecea;
+    color: #d32f2f;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="dashboard__container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <h2 class="sidebar__logo">Jobbrige</h2>
+        <ul class="sidebar__menu">
+            <li><a href="#" class="active"><i class="ri-dashboard-line"></i> Dashboard</a></li>
+            <li><a href="#"><i class="ri-briefcase-line"></i> Jobs</a></li>
+            <li><a href="{% url 'profile' %}"><i class="ri-user-line"></i> Profile</a></li>
+            <li><a href="#"><i class="ri-settings-4-line"></i> Settings</a></li>
+            <li><a href="{% url 'crud' %}"><i class="ri-settings-4-line"></i> CRUD</a></li>
+            <li><a href="{% url 'logout' %}"><i class="ri-logout-box-r-line"></i> Logout</a></li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+        <h2 style="margin-bottom: 1.5rem;">Student CRUD Panel</h2>
+
+        <!-- Create Form -->
+        <form class="crud-form" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{form}}
+            <button type="submit">Add Student</button>
+        </form>
+        
+        
+        <!-- List of Records -->
+        <div class="dashboard__section" style="margin-top: 2rem;">
+            <h2>Student List</h2>
+            <div class="application__list">
+        
+                <!-- Example record -->
+                <div class="application">
+                    <div>
+                        <h4>Chirag Shah</h4>
+                        <p>chirag@example.com • BCA</p>
+                    </div>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <a href="#" class="status badge-success">Edit</a>
+                        <a href="#" class="status badge-rejected">Delete</a>
+                    </div>
+                </div>
+        
+                <div class="application">
+                    <div>
+                        <h4>Riya Patel</h4>
+                        <p>riya@example.com • MCA</p>
+                    </div>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <a href="#" class="status badge-success">Edit</a>
+                        <a href="#" class="status badge-rejected">Delete</a>
+                    </div>
+                </div>
+        
+            </div>
+        </div>
+        
+    </main>
+</div>
+
+{% endblock %}

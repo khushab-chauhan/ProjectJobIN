@@ -24,9 +24,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-1v+emg31s8-rw#%clww@ge9ubme)x%2k3n-ps^5rfr926934k5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+IS_PRODUCTION_MODE = not DEBUG
+
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -84,6 +87,19 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+if IS_PRODUCTION_MODE:
+    DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.mysql',
+                'NAME': 'JobIn01$JobIn',
+                'USER': 'JobIn01',
+                'PASSWORD': 'harsh9099',
+                'HOST':'JobIn01.mysql.pythonanywhere-services.com',
+                'PORT':'3306',
+                }
+            }
+
 
 
 # Password validation
