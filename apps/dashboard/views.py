@@ -9,7 +9,7 @@ from apps.users.models import User
 from functools import wraps
 from django.contrib.auth.decorators import login_required
 from .forms import CRUDforms
-from django.contrib.auth import get_user
+from django.contrib.auth import get_user 
 # Create your views here.
 
 def login_requirement(my_fucn):
@@ -126,7 +126,7 @@ JOBIN Team
             user.save()
 
             messages.success(request, "An OTP has been sent to your registered email. Please check your inbox.")
-            return render(request, 'dashboard/otp_varify.html', {'email':email_})
+            return redirect('otp_varify',{'email':email_})
 
 
 
