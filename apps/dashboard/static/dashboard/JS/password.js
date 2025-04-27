@@ -1,5 +1,4 @@
-   // Show/Hide Password
-   const showHiddenPassword = (inputPassword, inputIcon) => {
+const showHiddenPassword = (inputPassword, inputIcon) => {
     const input = document.getElementById(inputPassword),
         iconEye = document.getElementById(inputIcon);
 
@@ -16,3 +15,4 @@
     });
 };
 showHiddenPassword("password", "input-icon");
+

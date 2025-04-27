@@ -152,7 +152,7 @@ img {
     height: max-content;
     position: absolute;
     right: 0.75rem;
-    top: 0;
+    top: 20px;
     bottom: 0;
     margin: auto 0;
     font-size: 1.25rem;
